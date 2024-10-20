@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://images.pexels.com/photos/5717479/pexels-photo-5717479.jpeg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .task-container {
+            width: 350px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .task-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .task-input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .task-input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 10px 0 0 10px;
+            font-size: 16px;
+        }
+        .task-input-container button {
+            padding: 10px 20px;
+            border: 2px solid #333;
+            border-radius: 0 10px 10px 0;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .task-list, .completed-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item, .completed-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .task-item:hover, .completed-item:hover {
+            background: #ddd;
+        }
+        .completed-item {
+            text-decoration: line-through;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <h1>TO DO</h1>
+        <div class="task-input-container">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul class="task-list" id="taskList"></ul>
+        <h2>Completed Tasks</h2>
+        <ul class="completed-list" id="completedList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const input = document.getElementById('taskInput').value;
+            if (input.trim() !== "") {
+                const li = document.createElement('li');
+                li.textContent = input;
+                li.classList.add('task-item');
+                li.onclick = function() {
+                    this.classList.toggle('completed-item');
+                    updateCompletedTasks();
+                };
+                document.getElementById('taskList').appendChild(li);
+                document.getElementById('taskInput').value = "";
+            }
+        }
+
+        function updateCompletedTasks() {
+            const completedList = document.getElementById('completedList');
+            completedList.innerHTML = "";
+            const taskItems = document.querySelectorAll('.task-item');
+            taskItems.forEach(item => {
+                if (item.classList.contains('completed-item')) {
+                    const li = document.createElement('li');
+                    li.textContent = item.textContent;
+                    li.classList.add('completed-item');
+                    completedList.appendChild(li);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
